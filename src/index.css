@@ -1,0 +1,386 @@
+/* =====================================================
+  Finsakhi — Bright Neon Theme (FINAL CSS WITH ANIMATIONS)
+  Includes:
+  - Header gradient animation
+  - Improved navigation (white text + neon borders + emoji icons)
+  - Ribbon navigation bar (like the screenshot)
+  - Smooth hover animations for cards, hero, chat, tables, mic button
+  - Neon shine sweeps + floating UI motion
+  - FULL compatibility with your existing HTML
+  ===================================================== */
+
+/* ---------- Theme Tokens ---------- */
+:root{
+  --bg: #071229;
+  --bg-2: #08162a;
+
+  --nav-start: #ff007a;
+  --nav-mid:   #6a00ff;
+  --nav-end:   #00d4ff;
+
+  --accent: #ff007a;
+  --muted: #b7d6e6;
+
+  --surface-text: #ffffff;
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+
+  --shadow-1: 0 8px 30px rgba(2,6,23,0.55);
+  --nav-shadow: 0 12px 40px rgba(0,0,0,0.45);
+
+  --header-height-desktop: 88px;
+  --header-height-mobile: 68px;
+
+  --text-sans: Inter, system-ui, sans-serif;
+
+  --brand-accent-gradient: linear-gradient(90deg,
+    var(--nav-start),
+    var(--nav-mid),
+    var(--nav-end)
+  );
+}
+
+/* ---------- Base ---------- */
+*{
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+html,body,#root{
+  margin:0;
+  height:100%;
+  font-family: var(--text-sans);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  color: var(--surface-text);
+}
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important;}
+}
+
+/* ---------- Global Animations ---------- */
+
+@keyframes navGlow{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+@keyframes fadeIn{
+  to{opacity:1; transform:translateY(0);}
+}
+@keyframes shineSweep{
+  0%{transform:translateX(-140%); opacity:0;}
+  50%{opacity:1;}
+  100%{transform:translateX(140%); opacity:0;}
+}
+@keyframes floatCard{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+  100%{transform:translateY(0);}
+}
+
+/* -----------------------------------------------------
+  TOP BAR
+----------------------------------------------------- */
+.app-bar{
+  position:sticky;
+  top:0;
+  height:var(--header-height-desktop);
+  display:flex;
+  align-items:center;
+  padding:0 22px;
+  background: var(--brand-accent-gradient);
+  background-size: 280% 100%;
+  animation: navGlow 10s linear infinite;
+  box-shadow: var(--nav-shadow);
+  z-index:100;
+}
+
+/* BRAND LOGO */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.brand-logo{
+  width:70px;
+  height:70px;
+  border-radius:14px;
+  background: radial-gradient(circle,#ff007a,#00d4ff);
+  box-shadow:0 12px 32px rgba(0,0,0,0.5);
+  animation:floatCard 4s ease-in-out infinite;
+}
+.brand-text{
+  font-size:28px;
+  font-weight:900;
+}
+.subtitle{
+  font-size:13px;
+  opacity:0.9;
+}
+
+/* -----------------------------------------------------
+  MAIN WRAPPER
+----------------------------------------------------- */
+.app-main{
+  max-width:1200px;
+  margin:0 auto;
+  padding: calc(var(--header-height-desktop) + 20px) 20px 40px;
+}
+
+/* -----------------------------------------------------
+  RIBBON NAVIGATION (NEW)
+----------------------------------------------------- */
+
+.ribbon-nav{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:10px 16px;
+  background:rgba(255,255,255,0.05);
+  border-radius:40px;
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(8px);
+  margin-bottom:35px;
+}
+
+.ribbon-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 20px;
+  font-size:16px;
+  border-radius:30px;
+  font-weight:800;
+  background:rgba(255,255,255,0.07);
+  color:#ffffff !important;
+  border:2px solid rgba(255,255,255,0.28);
+  transition:0.25s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+/* shine effect */
+.ribbon-item::after{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:50%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transform:translateX(-120%);
+  opacity:0;
+}
+
+/* hover */
+.ribbon-item:hover{
+  transform:translateY(-5px);
+  border-color:#fff;
+  box-shadow:0 22px 50px rgba(0,0,0,0.6);
+}
+.ribbon-item:hover::after{
+  animation:shineSweep 1.2s linear;
+  opacity:1;
+}
+
+/* active */
+.ribbon-item.active{
+  background: var(--brand-accent-gradient);
+  border-color:#fff;
+  box-shadow:0 26px 60px rgba(0,0,0,0.7);
+}
+
+/* -----------------------------------------------------
+  CARDS
+----------------------------------------------------- */
+.card{
+  background: rgba(255,255,255,0.06);
+  padding:18px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  margin-bottom:18px;
+  position:relative;
+  border:1px solid rgba(255,255,255,0.15);
+  transition:0.3s ease;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 40px 90px rgba(0,0,0,0.75);
+  border-color:#fff;
+}
+
+.card::after{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-150%;
+  width:120%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);
+  transform:skewX(-20deg);
+}
+.card:hover::after{
+  animation:shineSweep 1.4s linear;
+}
+
+/* -----------------------------------------------------
+  HERO SECTION
+----------------------------------------------------- */
+.hero-card{
+  display:flex;
+  gap:20px;
+  background: rgba(255,255,255,0.08);
+  padding:18px;
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-1);
+  transition:0.3s;
+}
+.hero-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 30px 80px rgba(0,0,0,0.65);
+  border:1px solid #fff;
+}
+
+.avatar{
+  width:64px;
+  height:64px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#ff007a,#00d4ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  animation:floatCard 4s infinite ease-in-out;
+}
+
+/* -----------------------------------------------------
+  CHAT
+----------------------------------------------------- */
+.conversation{
+  background: rgba(255,255,255,0.05);
+  padding:16px;
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-1);
+  min-height:260px;
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+.messages{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-height:500px;
+  overflow:auto;
+}
+
+.msg{
+  padding:12px;
+  border-radius:12px;
+  font-size:15px;
+  max-width:75%;
+  animation:fadeIn 0.35s ease forwards;
+  opacity:0;
+}
+.msg.user{
+  background:#122135;
+  color:#fff;
+  align-self:flex-end;
+}
+.msg.bot{
+  background:rgba(255,255,255,0.08);
+  color:var(--muted);
+}
+
+/* -----------------------------------------------------
+  MIC BUTTON
+----------------------------------------------------- */
+.mic-btn{
+  background:linear-gradient(90deg,#ff007a,#00d4ff);
+  padding:12px 18px;
+  border-radius:14px;
+  border:0;
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+  transition:0.3s ease;
+  margin-left: 40%;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+.mic-btn:hover{
+  transform:translateY(-6px);
+  box-shadow:0 26px 70px rgba(0,0,0,0.7);
+}
+
+/* -----------------------------------------------------
+  TABLES
+----------------------------------------------------- */
+.table-wrap{
+  overflow-x:auto;
+  background:rgba(255,255,255,0.05);
+  padding:12px;
+  border-radius:var(--radius-lg);
+}
+.tx-table{
+  width:100%;
+  min-width:700px;
+  border-collapse:collapse;
+}
+.tx-table tr{
+  transition:0.25s ease;
+}
+.tx-table tbody tr:hover{
+  background:rgba(255,255,255,0.08);
+  transform:translateY(-3px);
+}
+.tx-table th{
+  text-align:left;
+  padding:12px;
+  color:var(--muted);
+}
+.tx-table td{
+  padding:12px;
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+/* -----------------------------------------------------
+  INPUTS (Contains the fix for the white dropdown)
+----------------------------------------------------- */
+input,select{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.15);
+  padding:10px;
+  border-radius:8px;
+  color:#fff;
+  transition:0.2s;
+}
+input:focus,select:focus{
+  border-color:#ff007a;
+  outline:none;
+  box-shadow:0 0 12px rgba(255,0,122,0.4);
+}
+
+/* 👇 FIX FOR WHITE DROPDOWN MENU */
+select option {
+  /* Forces the dropdown background to be dark (theme background) */
+  background: var(--bg); 
+  /* Forces the option text to be white */
+  color: #fff;
+}
+/* 👆 END FIX */
+
+/* -----------------------------------------------------
+  FOOTER
+----------------------------------------------------- */
+.footer{
+  text-align:center;
+  color:var(--muted);
+  margin:20px 0;
+}

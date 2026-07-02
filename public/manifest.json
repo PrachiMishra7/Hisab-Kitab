@@ -1,0 +1,12 @@
+{
+  "name": "FINSAKHI",
+  "short_name": "Finsakhi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#072036",
+  "theme_color": "#ffb400",
+  "icons": [
+    { "src": "/assets/logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
