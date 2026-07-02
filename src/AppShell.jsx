@@ -10,8 +10,8 @@ export default function AppShell({ children, route, setRoute }) {
       <header className="app-bar">
         <div className="brand">
           <img
-            src="logo12345.jpg"
-            alt="Finsakhi logo"
+            src="./hisab_kitab_logo.png"
+            alt="Hisab‑Kitab logo"
             className="brand-logo"
             // FIX: Removed conflicting HTML width/height to rely on CSS (70x70)
             onError={(e) => {
@@ -24,7 +24,7 @@ export default function AppShell({ children, route, setRoute }) {
             }}
           />
           <div className="brand-info">
-            <div className="brand-text">FINSAKHI</div>
+            <div className="brand-text">Hisab‑Kitab</div>
             <div className="subtitle">Finance in Her Voice. Power in Her Hands.</div>
           </div>
         </div>

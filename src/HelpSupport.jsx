@@ -5,7 +5,7 @@ export default function HelpSupport() {
 
   const volunteerNumber = "+911234567890"; // update with real number
   const whatsappNumber = "911234567890";   // use digits only for wa.me
-  const defaultMessage = "Hello, I need assistance regarding the Finsakhi app.";
+  const defaultMessage = "Hello, I need assistance regarding the Hisab‑Kitab app.";
 
   // FAQ list (you can fetch from backend later)
   const faqs = [

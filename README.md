@@ -1,4 +1,4 @@
-Finsakhi React Prototype - v2
+Hisab‑Kitab React Prototype - v2
 ============================
 
 This updated prototype includes:
