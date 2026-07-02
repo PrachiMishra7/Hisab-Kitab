@@ -96,14 +96,14 @@ export default function EducationHub() {
   return (
     <div style={{ padding: 24 }}>
       <div style={{ marginBottom: 18 }}>
-        <h1 style={{ color: "#fff", display: "inline-block" }}>📚 Education Hub</h1>
+        <h1 style={{ color: "var(--text-primary)", display: "inline-block" }}>📚 Education Hub</h1>
 
         <div style={{ float: "right", display: "flex", gap: 8 }}>
           <input
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Search lessons..."
-            style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", background: "transparent", color: "#fff" }}
+            className="secondary-btn"
           />
         </div>
       </div>
@@ -126,7 +126,7 @@ export default function EducationHub() {
       {/* Bookmarked quick list */}
       {bookmarks.length > 0 && (
         <div style={{ marginTop: 24 }}>
-          <h3 style={{ color: "#fff" }}>Saved</h3>
+          <h3 style={{ color: "var(--text-primary)" }}>Saved</h3>
           <div style={{ display: "flex", gap: 8 }}>
             {bookmarks.map(id => {
               const item = lessons.find(x => x.id === id);
@@ -172,7 +172,7 @@ export default function EducationHub() {
               <button onClick={() => {
                 // mark as complete (for example)
                 alert("Marked complete");
-              }} style={{ padding: "8px 12px", borderRadius: 8, background: "#4caf50", color: "#fff", border: "none" }}>
+              }} className="primary-btn">
                 Mark Complete
               </button>
               <a href="#" onClick={(e) => { e.preventDefault(); alert("Open resource"); }} style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #ddd", textDecoration: "none", color: "#333" }}>

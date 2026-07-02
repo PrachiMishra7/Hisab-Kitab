@@ -11,6 +11,21 @@ import HelpSupport from './HelpSupport'
 import ProfilePage from './ProfilePage'
 import AppShell from './AppShell'
 import Chatbot from './Chatbot' // Chatbot (mock/demo) imported
+import { UserCircle, Mic } from 'lucide-react'
+
+function AppLoader() {
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, background: 'var(--bg-color)', zIndex: 9999,
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+      animation: 'fadeOut 0.5s ease 1.5s forwards'
+    }}>
+      <img src="/assets/logo.png" alt="Logo" style={{ width: 80, height: 80, borderRadius: 20, animation: 'pulseLogo 1.5s ease-in-out', border: '1px solid var(--glass-border)' }} />
+      <div style={{ marginTop: 24, fontSize: 24, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.5px' }}>Hisab-Kitab</div>
+      <div style={{ marginTop: 8, fontSize: 13, color: 'var(--text-secondary)' }}>Finance in Her Voice</div>
+    </div>
+  )
+}
 
 // inside src/App.jsx (add near top, below imports)
 // put this near the top of src/App.jsx (below imports)
@@ -44,8 +59,9 @@ function MiniChat({ lang = 'en-IN', speak = false }) {
     alignItems: 'center',
     gap: 12,
     padding: '12px 14px',
-    background: 'linear-gradient(90deg,#3b82f6,#8b5cf6)',
-    color: '#fff',
+    background: 'var(--bg-color)',
+    color: 'var(--text-primary)',
+    borderBottom: '1px solid var(--glass-border)'
   };
 
   const avatarWrap = {
@@ -55,18 +71,18 @@ function MiniChat({ lang = 'en-IN', speak = false }) {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: 'rgba(255,255,255,0.12)',
-    boxShadow: '0 6px 18px rgba(0,0,0,0.25)',
+    background: 'var(--glass-hover)',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
     flex: '0 0 46px'
   };
 
   const title = { fontWeight: 800, fontSize: 15, lineHeight: 1 };
-  const subtitle = { fontSize: 11, opacity: 0.92, marginTop: 3 };
+  const subtitle = { fontSize: 11, color: 'var(--text-secondary)', marginTop: 3 };
 
   // body: clamp & scroll
   const bodyWrap = {
     padding: 12,
-    background: 'linear-gradient(180deg, rgba(0,0,0,0.06), rgba(255,255,255,0.008))',
+    background: 'var(--bg-color)',
     minHeight: 160,
     maxHeight: 320,       // adjust as needed
     overflowY: 'auto',
@@ -84,12 +100,12 @@ function MiniChat({ lang = 'en-IN', speak = false }) {
 
   const footer = {
     padding: '8px 12px',
-    borderTop: '1px solid rgba(255,255,255,0.03)',
+    borderTop: '1px solid var(--glass-border)',
     display: 'flex',
     gap: 8,
     alignItems: 'center',
     justifyContent: 'space-between',
-    background: 'rgba(255,255,255,0.01)'
+    background: 'var(--bg-color)'
   };
 
   return (
@@ -115,7 +131,7 @@ function MiniChat({ lang = 'en-IN', speak = false }) {
               }}
               style={{
                 background: 'rgba(255,255,255,0.12)',
-                color: '#fff',
+                color: "var(--text-primary)",
                 border: 'none',
                 padding: '6px 10px',
                 borderRadius: 8,
@@ -143,15 +159,15 @@ function MiniChat({ lang = 'en-IN', speak = false }) {
         </div>
 
         <div style={footer}>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.8)' }}>Offline demo • safe for showcase</div>
+          <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Offline demo • safe for showcase</div>
 
           <div style={{ display: 'flex', gap: 8 }}>
             <button
               onClick={() => navigator.clipboard?.writeText("Try: 'balance' or 'send 200 to Sita'")}
               style={{
                 background: 'transparent',
-                border: '1px solid rgba(255,255,255,0.06)',
-                color: '#fff',
+                border: '1px solid var(--glass-border)',
+                color: 'var(--text-secondary)',
                 padding: '6px 10px',
                 borderRadius: 8,
                 fontWeight: 700,
@@ -190,6 +206,7 @@ const LANGUAGES = [
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 export default function App(){
+  const [isLoading, setIsLoading] = useState(true)
   const [isListening, setIsListening] = useState(false)
   const [messages, setMessages] = useState([])
   const [lang, setLang] = useState('en-IN')
@@ -234,9 +251,12 @@ export default function App(){
 
   // EFFECT HOOK TO MANAGE SPEECH RECOGNITION LIFECYCLE
   useEffect(() => {
+    // Dismiss loader after 1.8 seconds
+    const loaderTimer = setTimeout(() => setIsLoading(false), 1800);
+
     if (!SpeechRecognition) {
       console.error("Speech Recognition not supported in this browser.");
-      return;
+      return () => clearTimeout(loaderTimer);
     }
 
     const recognition = new SpeechRecognition();
@@ -272,6 +292,7 @@ export default function App(){
 
     return () => {
       try { recognition.stop(); } catch(e) {}
+      clearTimeout(loaderTimer);
     };
   }, [lang]); // Re-initialize recognition when language changes
 
@@ -334,23 +355,23 @@ export default function App(){
 
   function renderSamples(){
     const list = SAMPLE_COMMANDS[lang] || SAMPLE_COMMANDS['en-IN']
-    return list.map((s,i)=> <div key={i} className='sample'>{s}</div>)
+    return list.map((s,i)=> <div key={i} className='sample-pill' onClick={() => { addMessage(s, 'user'); processText(s); }}>{s}</div>)
   }
 
   function DiagnosticsPanel({ onTestTranscript }) {
     const [txt, setTxt] = useState('')
     return (
       <div className="card" style={{ marginTop: 12 }}>
-        <div className="card-title">Diagnostics</div>
-        <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+        <div className="card-title" style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8 }}>Diagnostics</div>
+        <div style={{ display: 'flex', gap: 8 }}>
           <input
+            type="text"
             value={txt}
             onChange={e => setTxt(e.target.value)}
             placeholder="Type test transcript"
-            style={{ flex: 1, padding: 8 }}
           />
           <button
-            className="icon-btn"
+            className="primary-btn"
             onClick={() => { if (txt.trim()) { onTestTranscript(txt.trim()); setTxt('') } }}
           >
             Send
@@ -361,29 +382,56 @@ export default function App(){
   }
 
   return (
-    <div className="app">
+    <>
+      {isLoading && <AppLoader />}
+      <div className="app">
       
       <AppShell route={route} setRoute={setRoute}>
         
         {/* Render selected page */}
         {route === 'home' ? (
-          <main>
-            <section className="card">
-              <div className="actions-header">
-                <div className="avatar">👩🏽‍💼</div>
-                <div>
-                  <div className="instructions">Ask me anything about your money</div>
-                  <div className="samples" aria-hidden="true">
+          <div className="dashboard-grid">
+            
+            {/* LEFT COLUMN: Main Interactions */}
+            <div className="dashboard-column">
+              <section className="card" style={{ display: 'flex', flexDirection: 'column', minHeight: 480 }}>
+                <h2 className="card-title" style={{ marginBottom: 16 }}>Conversation</h2>
+                <div className="conversation" aria-live="polite" style={{ flex: 1, marginBottom: 16 }}>
+                  <div className="messages">
+                    {messages.map((m, i)=>(<div key={i} className={`msg ${m.who==='user'?'user':'bot'}`}>{m.text}</div>))}
+                  </div>
+                </div>
+                
+                {/* Unified text input attached directly to the main conversation */}
+                <div style={{ marginTop: 'auto', borderTop: '1px solid var(--glass-border)', paddingTop: 16 }}>
+                  <TextFallback templates={SAMPLE_COMMANDS[lang]} onSubmit={(txt) => { addMessage(txt, 'user'); processText(txt); }} />
+                </div>
+              </section>
+            </div>
+
+            {/* RIGHT COLUMN: Controls & Setup */}
+            <div className="dashboard-column">
+              <section className="card">
+                <div className="actions-header" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                    <div className="avatar" style={{ background: "var(--glass-hover)", border: "1px solid var(--glass-border)", boxShadow: "none" }}><UserCircle size={32} color="var(--text-primary)" /></div>
+                    <div>
+                      <div className="instructions" style={{ fontWeight: 600, fontSize: 18 }}>Ask me anything</div>
+                      <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>about your money</div>
+                    </div>
+                  </div>
+                  
+                  <div className="samples" aria-hidden="true" style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                     {renderSamples()}
                   </div>
                   
-                  {/* 👇 Language Selector UI */}
-                  <div className="card" style={{ marginTop: 12 }}>
-                    <div className="card-title">Select Language</div>
+                  {/* Language Selector UI */}
+                  <div style={{ marginTop: 12 }}>
+                    <label style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Select Language</label>
                     <select 
                       value={lang} 
                       onChange={(e) => setLang(e.target.value)}
-                      style={{ marginTop: 8, padding: 10, width: '100%', color: '#fff', background: 'rgba(255,255,255,0.06)' }}
+                      style={{ marginTop: 8 }}
                     >
                       {LANGUAGES.map(l => (
                         <option key={l.code} value={l.code}>
@@ -392,96 +440,15 @@ export default function App(){
                       ))}
                     </select>
                   </div>
-                  {/* 👆 END Language Selector UI */}
 
-                  <DiagnosticsPanel
-                    onTestTranscript={(txt) => { addMessage(txt, 'user'); processText(txt); }}
-                  />
+                  <DiagnosticsPanel onTestTranscript={(txt) => { addMessage(txt, 'user'); processText(txt); }} />
 
-                  <TextFallback
-                    templates={SAMPLE_COMMANDS[lang]}
-                    onSubmit={(txt) => { addMessage(txt, 'user'); processText(txt); }}
-                  />
-
-                  <TTSControls
-                    rate={ttsRate}
-                    onChangeRate={(r) => setTtsRate(r)}
-                    onRepeat={handleRepeat}
-                  />
+                  <TTSControls rate={ttsRate} onChangeRate={(r) => setTtsRate(r)} onRepeat={handleRepeat} />
                 </div>
-              </div>
-            </section>
+              </section>
+            </div>
 
-            <section className="card">
-              <h2 className="card-title">Conversation</h2>
-              <div className="conversation" aria-live="polite">
-                <div className="messages">
-                  {messages.map((m, i)=>(<div key={i} className={`msg ${m.who==='user'?'user':'bot'}`}>{m.text}</div>))}
-                </div>
-              </div>
-            </section>
-
-            {/* ----------------- Mini Chatbot (embedded inside Home) ----------------- */}
-<section style={{ marginTop: 20 }}>
-  <div style={{ display: "flex", justifyContent: "center" }}>
-    
-    <div
-      aria-hidden={false}
-      style={{
-        width: 360,
-        borderRadius: 12,
-        overflow: "hidden",
-        backdropFilter: "blur(10px)",
-        background: "rgba(255,255,255,0.05)",
-        border: "1px solid rgba(255,255,255,0.12)",
-        boxShadow: "0 8px 30px rgba(0,0,0,0.45)",
-      }}
-    >
-
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          padding: "12px 16px",
-          background: "linear-gradient(90deg,#235dff,#8b5cf6)",
-          color: "#fff",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 22,
-            width: 40,
-            height: 40,
-            borderRadius: 10,
-            background: "rgba(255,255,255,0.18)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-          }}
-        >
-          🤖
-        </div>
-
-        <div>
-          <div style={{ fontSize: 15, fontWeight: 800 }}>Mini Assistant</div>
-          <div style={{ fontSize: 11, opacity: 0.9 }}>Chatbot Demo • {lang}</div>
-        </div>
-      </div>
-
-      {/* Body */}
-      <div style={{ padding: 12 }}>
-        <Chatbot lang={lang} speak={false} />
-      </div>
-    </div>
-
-  </div>
-</section>
-{/* ----------------------------------------------------------------------- */}
-
-          </main>
+          </div>
         ) : route === 'transactions' ? (
           <TransactionsPage lang={lang} /> // ✅ lang prop added
         ) : route === 'schemes' ? (
@@ -500,13 +467,14 @@ export default function App(){
 
       </AppShell>
 
-      {/* ---------- Centered Mic Button (improved & accessible) ---------- */}
-      <div className="mic-float" aria-hidden={false}>
+      {/* ---------- Floating Mic Button (FAB) ---------- */}
+      <div className="fab-mic-container" aria-hidden={false}>
         <button
           role="button"
           title="Toggle voice input"
           aria-pressed={isListening ? "true" : "false"}
           className={`mic-btn ${isListening ? "listening" : ""}`}
+          style={{ margin: 0 }}
           onClick={toggleListen}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -519,14 +487,13 @@ export default function App(){
           <span className="mic-waves" aria-hidden="true" />
 
           {/* mic icon */}
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zM12 17v4" />
-          </svg>
+          <Mic size={22} color="#fff" strokeWidth={2.5} style={{ zIndex: 2 }} aria-hidden="true" />
 
           {/* label */}
           <span>{isListening ? "Listening..." : "Speak"}</span>
         </button>
       </div>
     </div>
+    </>
   )
 }

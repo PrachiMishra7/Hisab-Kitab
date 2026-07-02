@@ -11,31 +11,24 @@ export default function TextFallback({ onSubmit, templates = [] }) {
   }
 
   return (
-    <div className="text-fallback" style={{ marginTop: 12 }}>
-      <div style={{ color: '#9fb3c8', marginBottom: 8 }}>Quick text fallback</div>
+    <div className="card" style={{ marginTop: 12 }}>
+      <div className="card-title" style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8 }}>Quick text fallback</div>
       <div style={{ display: 'flex', gap: 8 }}>
         <input
+          type="text"
           value={text}
           onChange={e => setText(e.target.value)}
           placeholder="Type or choose a template"
-          style={{
-            flex: 1,
-            padding: 8,
-            borderRadius: 10,
-            border: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.02)',
-            color: '#fff'
-          }}
         />
-        <button className="icon-btn" onClick={submit}>Send</button>
+        <button className="primary-btn" onClick={submit}>Send</button>
       </div>
 
       {templates && templates.length > 0 && (
-        <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
           {templates.map((t, i) => (
             <button
               key={i}
-              className="sample"
+              className="sample-pill"
               onClick={() => { onSubmit && onSubmit(t) }}
             >
               {t}

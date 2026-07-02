@@ -89,7 +89,7 @@ export default function KYCUpload() {
   }
 
   return (
-    <div style={{ maxWidth: 820, margin: "0 auto", color: "#fff" }}>
+    <div style={{ maxWidth: 820, margin: "0 auto", color: "var(--text-primary)" }}>
       <h2>Step 1: Upload Your Aadhaar / ID</h2>
 
       <div style={{
@@ -114,7 +114,7 @@ export default function KYCUpload() {
             borderRadius: 8,
             cursor: "pointer",
             fontWeight: 700,
-            color: "#fff"
+            color: "var(--text-primary)"
           }}>
             Choose File
           </label>
@@ -142,7 +142,7 @@ export default function KYCUpload() {
               borderRadius: 8,
               background: uploading ? "#999" : "#4caf50",
               border: "none",
-              color: "#fff",
+              color: "var(--text-primary)",
               fontWeight: 700,
               cursor: uploading ? "not-allowed" : "pointer"
             }}
@@ -167,7 +167,7 @@ export default function KYCUpload() {
           bottom: 20,
           right: 20,
           background: "#4caf50",
-          color: "#fff",
+          color: "var(--text-primary)",
           padding: "12px 20px",
           borderRadius: 8,
           boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
