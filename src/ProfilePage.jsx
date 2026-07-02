@@ -90,7 +90,7 @@ export default function ProfilePage() {
       {/* EMBEDDED CSS — NO NEED TO EDIT index.css */}
       <style>{`
         .profile-wrapper {
-          color: #eaf6ff;
+          color: var(--text-primary);
           padding: 20px;
         }
         .profile-grid {
@@ -99,8 +99,8 @@ export default function ProfilePage() {
           gap: 20px;
         }
         .profile-card {
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.1);
+          background: var(--glass-bg);
+          border: 1px solid var(--glass-border);
           padding: 20px;
           border-radius: 14px;
           backdrop-filter: blur(6px);
@@ -110,33 +110,38 @@ export default function ProfilePage() {
           height: 110px;
           border-radius: 14px;
           object-fit: cover;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.12);
         }
         .avatar-fallback {
           width: 110px;
           height: 110px;
           border-radius: 14px;
-          background: linear-gradient(135deg,#ff007a,#00d4ff);
+          background: var(--accent-gradient);
           display:flex;
           align-items:center;
           justify-content:center;
           font-size:42px;
-          color:#fff;
+          color: #ffffff;
           font-weight:900;
         }
         .profile-name { font-size: 20px; font-weight: 900; margin-top: 10px; }
-        .profile-sub { color: #bcd4e6; font-size: 14px; margin-top: 2px; }
+        .profile-sub { color: var(--text-secondary); font-size: 14px; margin-top: 2px; }
 
         .btn {
-          padding: 10px 14px;
+          padding: 10px 18px;
           border-radius: 8px;
           font-weight: 700;
           cursor: pointer;
           border: none;
+          font-size: 14px;
+          transition: all 0.2s;
         }
-        .btn-edit { background: #4caf50; color:#fff; }
-        .btn-save { background: #1b6ed1; color:#fff; }
-        .btn-cancel { background:#fff; color:#000; }
+        .btn-edit { background: var(--accent-primary); color: #ffffff; box-shadow: 0 4px 12px rgba(79,70,229,0.25); }
+        .btn-edit:hover { background: #4338ca; }
+        .btn-save { background: #059669; color: #ffffff; }
+        .btn-save:hover { background: #047857; }
+        .btn-cancel { background: #f1f5f9; color: var(--text-primary); border: 1px solid var(--glass-border); }
+        .btn-cancel:hover { background: #e2e8f0; }
 
         .field {
           display: flex;
@@ -145,11 +150,11 @@ export default function ProfilePage() {
         }
         .field-title {
           font-weight: 800;
-          color: #cfeff9;
+          color: var(--text-secondary);
         }
         .field-read {
           background: #fff;
-          color:#071227;
+          color: var(--text-primary);
           padding: 12px;
           border-radius: 8px;
         }
@@ -158,7 +163,7 @@ export default function ProfilePage() {
           border-radius: 8px;
           border: none;
           background: #fff;
-          color:#071227;
+          color: var(--text-primary);
         }
         .form-error {
           color: #ff6b6b;
@@ -167,14 +172,15 @@ export default function ProfilePage() {
         .toast {
           position: fixed;
           right: 22px;
-          bottom: 22px;
-          background: #2ecc71;
-          padding: 12px 16px;
+          bottom: 80px;
+          background: #059669;
+          padding: 12px 18px;
           border-radius: 10px;
-          font-weight: 800;
-          color: white;
+          font-weight: 700;
+          font-size: 14px;
+          color: #ffffff;
           z-index: 9999;
-          box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+          box-shadow: 0 6px 20px rgba(5,150,105,0.35);
         }
         @media(max-width:900px){
           .profile-grid { grid-template-columns: 1fr; }
@@ -206,13 +212,13 @@ export default function ProfilePage() {
 
             {/* Buttons */}
             {!editing ? (
-              <button className="btn btn-edit" onClick={startEdit}>✏️ Edit Profile</button>
+              <button className="primary-btn" onClick={startEdit}>✏️ Edit Profile</button>
             ) : (
               <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-                <button className="btn btn-save" onClick={saveProfile}>
+                <button className="primary-btn" onClick={saveProfile}>
                   {loading ? "Saving…" : "💾 Save"}
                 </button>
-                <button className="btn btn-cancel" onClick={cancelEdit}>Cancel</button>
+                <button className="secondary-btn" onClick={cancelEdit}>Cancel</button>
               </div>
             )}
 

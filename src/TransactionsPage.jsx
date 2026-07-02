@@ -177,41 +177,44 @@ export default function TransactionsPage() {
   // embedded CSS inside component (no index.css change required)
   const embeddedStyle = `
     /* TransactionsPage embedded styles */
-    .tx-page { color: #eaf6ff; padding: 18px; }
-    .tx-page h2 { font-size: 28px; margin-bottom: 12px; color: #fff; }
+    .tx-page { color: var(--text-primary); padding: 18px; }
+    .tx-page h2 { font-size: 28px; font-weight: 800; margin-bottom: 16px; color: var(--text-primary); letter-spacing: -0.5px; }
 
-    .tx-hero { display:flex; gap:20px; align-items:center; margin-bottom:18px; flex-wrap:wrap; }
-    .tx-summary { display:flex; gap:18px; align-items:center; color:#eaf6ff; }
-    .tx-badge { display:flex; align-items:center; gap:8px; background: rgba(255,255,255,0.02); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.04); min-width:160px; }
+    .tx-hero { display:flex; gap:20px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
+    .tx-summary { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+    .tx-badge { display:flex; align-items:center; gap:10px; background: #ffffff; padding:14px 18px; border-radius:12px; border:1px solid var(--glass-border); min-width:150px; box-shadow: var(--glass-shadow); }
     .tx-badge .emoji { font-size:22px; }
-    .tx-badge .amount { font-weight:900; font-size:18px; margin-left:6px; color:#fff; }
+    .tx-badge .amount { font-weight:800; font-size:18px; margin-left:4px; color: var(--text-primary); }
 
-    .tx-chart-wrap { height:160px; width:100%; display:flex; align-items:center; justify-content:center; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.04); }
-    .tx-legend { display:flex; gap:12px; align-items:center; justify-content:center; margin-top:8px; color:#cfeff9; font-weight:700; }
+    .tx-chart-wrap { height:160px; width:100%; display:flex; align-items:center; justify-content:center; background: #ffffff; padding:12px; border-radius:12px; border:1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
+    .tx-legend { display:flex; gap:16px; align-items:center; justify-content:center; margin-top:8px; color: var(--text-secondary); font-weight:600; }
 
-    .legend-item { display:flex; align-items:center; gap:8px; font-size:14px; }
-    .swatch { width:20px; height:10px; border-radius:3px; display:inline-block; box-shadow:0 2px 8px rgba(0,0,0,0.25); }
+    .legend-item { display:flex; align-items:center; gap:6px; font-size:13.5px; }
+    .swatch { width:18px; height:9px; border-radius:3px; display:inline-block; }
 
-    .tx-list { display:grid; gap:12px; margin-top:12px; margin-bottom:18px; }
-    .tx-card { display:flex; justify-content:space-between; align-items:center; padding:14px; background:#fff; color:#071227; border-radius:12px; box-shadow: 0 6px 20px rgba(2,6,23,0.25); border:1px solid rgba(0,0,0,0.06); }
-    .tx-card .icon { font-size:26px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:10px; background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02)); }
-    .tx-card .meta .title { font-weight:800; font-size:16px; color:#071227; }
-    .tx-card .meta .date { font-size:13px; color: #4b5563; margin-top:4px; }
+    .tx-list { display:grid; gap:10px; margin-top:14px; margin-bottom:18px; }
+    .tx-card { display:flex; justify-content:space-between; align-items:center; padding:14px 18px; background:#ffffff; color: var(--text-primary); border-radius:12px; box-shadow: var(--glass-shadow); border:1px solid var(--glass-border); transition: box-shadow 0.2s; }
+    .tx-card:hover { box-shadow: var(--glass-shadow-lg); border-color: #cbd5e1; }
+    .tx-card .icon { font-size:24px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:10px; background: #f1f5f9; flex-shrink:0; }
+    .tx-card .meta .title { font-weight:700; font-size:15.5px; color: var(--text-primary); }
+    .tx-card .meta .date { font-size:13px; color: var(--text-secondary); margin-top:3px; }
 
     .right { display:flex; gap:10px; align-items:center; }
-    .tx-amount { font-weight:900; font-size:18px; }
-    .tx-amount.income { color:#118f37; }
-    .tx-amount.expense { color:#d86f11; }
-    .tx-amount.saving { color:#1769c6; }
+    .tx-amount { font-weight:800; font-size:17px; }
+    .tx-amount.income { color: #059669; }
+    .tx-amount.expense { color: #dc2626; }
+    .tx-amount.saving { color: #2563eb; }
 
-    .del { background:transparent; border:0; cursor:pointer; font-size:16px; opacity:0.85; }
+    .del { background:transparent; border:0; cursor:pointer; font-size:16px; opacity:0.5; transition: opacity 0.2s; }
+    .del:hover { opacity: 1; }
 
-    .tx-form { margin-top:18px; padding:14px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); }
-    .tx-form h3 { margin:0 0 6px 0; color:#fff; }
-    .tx-form input, .tx-form select { padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:#fff; color:#071227; }
+    .tx-form { margin-top:20px; padding:20px; border-radius:14px; background: #ffffff; border:1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
+    .tx-form h3 { margin:0 0 16px 0; font-size:17px; font-weight:700; color: var(--text-primary); }
+    .tx-form input, .tx-form select { padding:11px 14px; border-radius:10px; border:1.5px solid var(--glass-border); background:#ffffff; color: var(--text-primary); font-size:14px; }
     .tx-form button { cursor:pointer; }
 
-    .tx-toast { position:fixed; right:20px; bottom:20px; background:#4caf50; color:#fff; padding:10px 14px; border-radius:10px; font-weight:800; box-shadow:0 8px 24px rgba(0,0,0,0.4); z-index:9999; }
+    .tx-toast { position:fixed; right:20px; bottom:80px; background: #059669; color: #ffffff; padding:12px 18px; border-radius:10px; font-weight:700; font-size:14px; box-shadow: 0 8px 24px rgba(5,150,105,0.35); z-index:9999; }
+    .tx-error { color: #dc2626; font-size:14px; font-weight:600; margin-bottom:12px; background:#fff5f5; padding:10px 14px; border-radius:8px; border: 1px solid #fecaca; }
 
     @media (max-width:900px) {
       .tx-hero { flex-direction:column; align-items:stretch; }
@@ -305,10 +308,10 @@ export default function TransactionsPage() {
           <input type="date" value={newTx.date} onChange={(e) => setNewTx({ ...newTx, date: e.target.value })} />
 
           <div style={{ display: "flex", gap: 8 }}>
-            <button type="submit" disabled={loading} style={{ flex: 1, background: "linear-gradient(90deg,#36d07b,#16a86b)", color: "#fff", padding: "10px 12px", borderRadius: 8, border: 0, fontWeight: 800 }}>
+            <button type="submit" disabled={loading} className="primary-btn" style={{ flex: 1 }}>
               Add
             </button>
-            <button type="button" onClick={() => setNewTx({ type: "expense", label: "", amount: "", date: "" })} style={{ padding: "10px 12px", borderRadius: 8, border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
+            <button type="button" onClick={() => setNewTx({ type: "expense", label: "", amount: "", date: "" })} className="secondary-btn">
               Reset
             </button>
           </div>

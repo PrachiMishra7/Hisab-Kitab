@@ -62,18 +62,20 @@ export default function SchemesPage() {
               display:'flex',
               justifyContent:'space-between',
               alignItems:'center',
-              padding:12,
+              padding:16,
               borderRadius:12,
-              background:'rgba(255,255,255,0.02)'
+              background:'var(--glass-bg)',
+              border:'1px solid var(--glass-border)',
+              boxShadow:'0 2px 4px rgba(0,0,0,0.02)'
             }}
           >
             <div>
               <div style={{ fontWeight:700 }}>{s.title}</div>
-              <div style={{ color:'var(--muted)', fontSize:13 }}>{s.desc}</div>
+              <div style={{ color:'var(--text-secondary)', fontSize:13, marginTop: 4 }}>{s.desc}</div>
             </div>
-            <div style={{ display:'flex', gap:8 }}>
-              <button className="icon-btn" onClick={() => open(s.link)}>Enroll</button>
-              <button className="icon-btn" onClick={() => open(s.link)}>Details</button>
+            <div style={{ display:'flex', gap:12 }}>
+              <button className="secondary-btn" onClick={() => open(s.link)}>Details</button>
+              <button className="primary-btn" onClick={() => open(s.link)}>Enroll</button>
             </div>
           </div>
         ))}

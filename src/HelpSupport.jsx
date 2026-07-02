@@ -43,13 +43,13 @@ export default function HelpSupport() {
           border: "1px solid rgba(255,255,255,0.15)"
         }}
       >
-        <h1 style={{ color: "#fff", display: "flex", alignItems: "center", gap: 8 }}>
+        <h1 style={{ color: "var(--text-primary)", display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{
             background: "#ff4d6d",
             padding: "4px 10px",
             borderRadius: 6,
             fontWeight: 700,
-            color: "#fff"
+            color: "var(--text-primary)"
           }}>SOS</span>
           Help & Support
         </h1>
@@ -62,16 +62,17 @@ export default function HelpSupport() {
         <div
           onClick={handleCall}
           style={{
-            background: "#4caf50",
+            background: "#16a34a",
             padding: 18,
             borderRadius: 12,
             marginTop: 20,
-            color: "#fff",
-            fontSize: 18,
+            color: "#ffffff",
+            fontSize: 17,
             fontWeight: 600,
             textAlign: "center",
             cursor: "pointer",
-            boxShadow: "0 3px 8px rgba(0,0,0,0.3)"
+            boxShadow: "0 4px 12px rgba(22,163,74,0.3)",
+            transition: "all 0.2s"
           }}
         >
           📞 Call Volunteer
@@ -81,16 +82,17 @@ export default function HelpSupport() {
         <div
           onClick={handleWhatsApp}
           style={{
-            background: "#2196f3",
+            background: "#2563eb",
             padding: 18,
             borderRadius: 12,
             marginTop: 12,
-            color: "#fff",
-            fontSize: 18,
+            color: "#ffffff",
+            fontSize: 17,
             fontWeight: 600,
             textAlign: "center",
             cursor: "pointer",
-            boxShadow: "0 3px 8px rgba(0,0,0,0.3)"
+            boxShadow: "0 4px 12px rgba(37,99,235,0.3)",
+            transition: "all 0.2s"
           }}
         >
           💬 WhatsApp Support
@@ -100,16 +102,17 @@ export default function HelpSupport() {
         <div
           onClick={() => setShowFAQ(true)}
           style={{
-            background: "#ff944d",
+            background: "#ea580c",
             padding: 18,
             borderRadius: 12,
             marginTop: 12,
-            color: "#fff",
-            fontSize: 18,
+            color: "#ffffff",
+            fontSize: 17,
             fontWeight: 600,
             textAlign: "center",
             cursor: "pointer",
-            boxShadow: "0 3px 8px rgba(0,0,0,0.3)"
+            boxShadow: "0 4px 12px rgba(234,88,12,0.3)",
+            transition: "all 0.2s"
           }}
         >
           ❓ FAQs
@@ -123,11 +126,12 @@ export default function HelpSupport() {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0,0,0,0.7)",
+            background: "rgba(15,23,42,0.55)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            zIndex: 9999
+            zIndex: 9999,
+            backdropFilter: "blur(4px)"
           }}
         >
           <div

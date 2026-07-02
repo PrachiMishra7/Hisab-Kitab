@@ -134,7 +134,7 @@ export default function SavingsSimulator({ lang = "en-IN" }) {
   }
 
   return (
-    <div style={{ maxWidth: 980, margin: "0 auto", color: "#fff" }}>
+    <div style={{ maxWidth: 980, margin: "0 auto", color: "var(--text-primary)" }}>
       <div className="card hero-card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <h1 style={{ margin: 0 }}>{strings.pageTitle}</h1>
@@ -169,7 +169,7 @@ export default function SavingsSimulator({ lang = "en-IN" }) {
                     <div>
                       <button
                         onClick={() => { setAmount( ex.id === "monthly-goal" ? 2000 : ex.id === "child-edu" ? 500 : 300 ); setMonths(12); }}
-                        style={{ background: "linear-gradient(90deg,#36d07b,#16a86b)", color: "#fff", border: "none", padding: "8px 12px", borderRadius: 8 }}
+                        className="primary-btn"
                       >
                         Use
                       </button>
@@ -191,7 +191,7 @@ export default function SavingsSimulator({ lang = "en-IN" }) {
               <label>{strings.monthsLabel}</label>
               <input type="number" value={months} onChange={e => setMonths(e.target.value)} style={{ padding: 10, borderRadius: 8 }} />
 
-              <button type="submit" style={{ background: "linear-gradient(90deg,#2fb2ff,#0b82e6)", color: "#fff", padding: "10px 12px", borderRadius: 8, border: 0 }}>
+              <button type="submit" className="primary-btn">
                 {strings.simulateBtn}
               </button>
             </form>
@@ -203,7 +203,7 @@ export default function SavingsSimulator({ lang = "en-IN" }) {
                 <div style={{ marginTop: 8, color: "rgba(255,255,255,0.8)" }}>
                   {result.months} × ₹{result.monthly} = ₹{result.total.toLocaleString()}
                 </div>
-                <button onClick={() => setResult(null)} style={{ marginTop: 10, background: "transparent", border: "1px solid rgba(255,255,255,0.06)", padding: "8px 10px", borderRadius: 8 }}>
+                <button onClick={() => setResult(null)} className="secondary-btn" style={{ marginTop: 10 }}>
                   {strings.backBtn}
                 </button>
               </div>
