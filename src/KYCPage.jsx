@@ -1,8 +1,9 @@
 // src/KYCUpload.jsx
 import React, { useState } from "react";
 import axios from "axios";
+import { t } from "./translations";
 
-export default function KYCUpload() {
+export default function KYCUpload({ lang = 'en-IN' }) {
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -90,7 +91,7 @@ export default function KYCUpload() {
 
   return (
     <div style={{ maxWidth: 820, margin: "0 auto", color: "var(--text-primary)" }}>
-      <h2>Step 1: Upload Your Aadhaar / ID</h2>
+      <h2>{t('KYC', lang)}</h2>
 
       <div style={{
         border: "2px dashed rgba(0,255,0,0.25)",

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 
 /**
  * SavingsSimulator — translated page
@@ -113,6 +113,10 @@ function t(lang, path) {
 export default function SavingsSimulator({ lang = "en-IN" }) {
   // local page-level language override (optional)
   const [pageLang, setPageLang] = useState(lang || "en-IN");
+
+  useEffect(() => {
+    setPageLang(lang || "en-IN");
+  }, [lang]);
 
   // simulator inputs
   const [amount, setAmount] = useState(2000);

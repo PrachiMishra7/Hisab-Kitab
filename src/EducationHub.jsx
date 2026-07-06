@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { t } from "./translations";
 
 // small Card component
 function LessonCard({ lesson, onOpen, bookmarked, onToggleBookmark }) {
@@ -49,7 +50,7 @@ function LessonCard({ lesson, onOpen, bookmarked, onToggleBookmark }) {
   );
 }
 
-export default function EducationHub() {
+export default function EducationHub({ lang = 'en-IN' }) {
   const [lessons, setLessons] = useState([]);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(null); // lesson opened in modal
@@ -96,7 +97,7 @@ export default function EducationHub() {
   return (
     <div style={{ padding: 24 }}>
       <div style={{ marginBottom: 18 }}>
-        <h1 style={{ color: "var(--text-primary)", display: "inline-block" }}>📚 Education Hub</h1>
+        <h1 style={{ color: "var(--text-primary)", display: "inline-block" }}>📚 {t('Education', lang)}</h1>
 
         <div style={{ float: "right", display: "flex", gap: 8 }}>
           <input

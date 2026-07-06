@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { t } from './translations'
 
-export default function TextFallback({ onSubmit, templates = [] }) {
+export default function TextFallback({ onSubmit, templates = [], lang = 'en-IN' }) {
   const [text, setText] = useState('')
 
   function submit() {
@@ -12,15 +13,15 @@ export default function TextFallback({ onSubmit, templates = [] }) {
 
   return (
     <div className="card" style={{ marginTop: 12 }}>
-      <div className="card-title" style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8 }}>Quick text fallback</div>
+      <div className="card-title" style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8 }}>{t('QuickText', lang)}</div>
       <div style={{ display: 'flex', gap: 8 }}>
         <input
           type="text"
           value={text}
           onChange={e => setText(e.target.value)}
-          placeholder="Type or choose a template"
+          placeholder={t('TypeTemplate', lang)}
         />
-        <button className="primary-btn" onClick={submit}>Send</button>
+        <button className="primary-btn" onClick={submit}>{t('SendBtn', lang)}</button>
       </div>
 
       {templates && templates.length > 0 && (

@@ -12,6 +12,7 @@ import ProfilePage from './ProfilePage'
 import AppShell from './AppShell'
 import Chatbot from './Chatbot' // Chatbot (mock/demo) imported
 import { UserCircle, Mic } from 'lucide-react'
+import { t } from './translations'
 
 function AppLoader() {
   return (
@@ -358,23 +359,23 @@ export default function App(){
     return list.map((s,i)=> <div key={i} className='sample-pill' onClick={() => { addMessage(s, 'user'); processText(s); }}>{s}</div>)
   }
 
-  function DiagnosticsPanel({ onTestTranscript }) {
+  function DiagnosticsPanel({ onTestTranscript, lang }) {
     const [txt, setTxt] = useState('')
     return (
       <div className="card" style={{ marginTop: 12 }}>
-        <div className="card-title" style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8 }}>Diagnostics</div>
+        <div className="card-title" style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8 }}>{t('Diagnostics', lang)}</div>
         <div style={{ display: 'flex', gap: 8 }}>
           <input
             type="text"
             value={txt}
             onChange={e => setTxt(e.target.value)}
-            placeholder="Type test transcript"
+            placeholder={t('TypeTest', lang)}
           />
           <button
             className="primary-btn"
             onClick={() => { if (txt.trim()) { onTestTranscript(txt.trim()); setTxt('') } }}
           >
-            Send
+            {t('SendBtn', lang)}
           </button>
         </div>
       </div>
@@ -386,7 +387,7 @@ export default function App(){
       {isLoading && <AppLoader />}
       <div className="app">
       
-      <AppShell route={route} setRoute={setRoute}>
+      <AppShell route={route} setRoute={setRoute} lang={lang}>
         
         {/* Render selected page */}
         {route === 'home' ? (
@@ -395,7 +396,7 @@ export default function App(){
             {/* LEFT COLUMN: Main Interactions */}
             <div className="dashboard-column">
               <section className="card" style={{ display: 'flex', flexDirection: 'column', minHeight: 480 }}>
-                <h2 className="card-title" style={{ marginBottom: 16 }}>Conversation</h2>
+                <h2 className="card-title" style={{ marginBottom: 16 }}>{t('Conversation', lang)}</h2>
                 <div className="conversation" aria-live="polite" style={{ flex: 1, marginBottom: 16 }}>
                   <div className="messages">
                     {messages.map((m, i)=>(<div key={i} className={`msg ${m.who==='user'?'user':'bot'}`}>{m.text}</div>))}
@@ -404,7 +405,7 @@ export default function App(){
                 
                 {/* Unified text input attached directly to the main conversation */}
                 <div style={{ marginTop: 'auto', borderTop: '1px solid var(--glass-border)', paddingTop: 16 }}>
-                  <TextFallback templates={SAMPLE_COMMANDS[lang]} onSubmit={(txt) => { addMessage(txt, 'user'); processText(txt); }} />
+                  <TextFallback templates={SAMPLE_COMMANDS[lang]} onSubmit={(txt) => { addMessage(txt, 'user'); processText(txt); }} lang={lang} />
                 </div>
               </section>
             </div>
@@ -416,8 +417,8 @@ export default function App(){
                   <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                     <div className="avatar" style={{ background: "var(--glass-hover)", border: "1px solid var(--glass-border)", boxShadow: "none" }}><UserCircle size={32} color="var(--text-primary)" /></div>
                     <div>
-                      <div className="instructions" style={{ fontWeight: 600, fontSize: 18 }}>Ask me anything</div>
-                      <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>about your money</div>
+                      <div className="instructions" style={{ fontWeight: 600, fontSize: 18 }}>{t('AskMe', lang)}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{t('AboutMoney', lang)}</div>
                     </div>
                   </div>
                   
@@ -427,7 +428,7 @@ export default function App(){
                   
                   {/* Language Selector UI */}
                   <div style={{ marginTop: 12 }}>
-                    <label style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Select Language</label>
+                    <label style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{t('SelectLanguage', lang)}</label>
                     <select 
                       value={lang} 
                       onChange={(e) => setLang(e.target.value)}
@@ -441,9 +442,9 @@ export default function App(){
                     </select>
                   </div>
 
-                  <DiagnosticsPanel onTestTranscript={(txt) => { addMessage(txt, 'user'); processText(txt); }} />
+                  <DiagnosticsPanel onTestTranscript={(txt) => { addMessage(txt, 'user'); processText(txt); }} lang={lang} />
 
-                  <TTSControls rate={ttsRate} onChangeRate={(r) => setTtsRate(r)} onRepeat={handleRepeat} />
+                  <TTSControls rate={ttsRate} onChangeRate={(r) => setTtsRate(r)} onRepeat={handleRepeat} lang={lang} />
                 </div>
               </section>
             </div>
@@ -490,7 +491,7 @@ export default function App(){
           <Mic size={22} color="#fff" strokeWidth={2.5} style={{ zIndex: 2 }} aria-hidden="true" />
 
           {/* label */}
-          <span>{isListening ? "Listening..." : "Speak"}</span>
+          <span>{isListening ? t('Listening', lang) : t('Speak', lang)}</span>
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { t } from "./translations";
 
-export default function HelpSupport() {
+export default function HelpSupport({ lang = 'en-IN' }) {
   const [showFAQ, setShowFAQ] = useState(false);
 
   const volunteerNumber = "+911234567890"; // update with real number
@@ -51,7 +52,7 @@ export default function HelpSupport() {
             fontWeight: 700,
             color: "var(--text-primary)"
           }}>SOS</span>
-          Help & Support
+          {t('Help', lang)}
         </h1>
 
         <p style={{ marginTop: 10, color: "#ccc" }}>

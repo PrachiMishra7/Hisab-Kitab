@@ -1,16 +1,17 @@
 import React from 'react';
 import { Home, CreditCard, ClipboardList, PiggyBank, ShieldCheck, GraduationCap, HelpCircle, User } from 'lucide-react';
+import { t } from './translations';
 
-export default function Sidebar({ route, setRoute }) {
+export default function Sidebar({ route, setRoute, lang = 'en-IN' }) {
   const navItems = [
-    { id: 'home', label: 'Dashboard', icon: <Home size={18} /> },
-    { id: 'transactions', label: 'Transactions', icon: <CreditCard size={18} /> },
-    { id: 'schemes', label: 'Schemes', icon: <ClipboardList size={18} /> },
-    { id: 'savings', label: 'Savings', icon: <PiggyBank size={18} /> },
-    { id: 'kyc', label: 'KYC', icon: <ShieldCheck size={18} /> },
-    { id: 'education', label: 'Education Hub', icon: <GraduationCap size={18} /> },
-    { id: 'help', label: 'Help & Support', icon: <HelpCircle size={18} /> },
-    { id: 'profile', label: 'Profile', icon: <User size={18} /> }
+    { id: 'home', label: t('Dashboard', lang), icon: <Home size={18} /> },
+    { id: 'transactions', label: t('Transactions', lang), icon: <CreditCard size={18} /> },
+    { id: 'schemes', label: t('Schemes', lang), icon: <ClipboardList size={18} /> },
+    { id: 'savings', label: t('Savings', lang), icon: <PiggyBank size={18} /> },
+    { id: 'kyc', label: t('KYC', lang), icon: <ShieldCheck size={18} /> },
+    { id: 'education', label: t('Education', lang), icon: <GraduationCap size={18} /> },
+    { id: 'help', label: t('Help', lang), icon: <HelpCircle size={18} /> },
+    { id: 'profile', label: t('Profile', lang), icon: <User size={18} /> }
   ];
 
   return (
@@ -42,7 +43,7 @@ export default function Sidebar({ route, setRoute }) {
       </nav>
 
       <div className="sidebar-footer">
-        Finance in Her Voice.<br/>Power in Her Hands.
+        {t('Tagline1', lang)}<br/>{t('Tagline2', lang)}
       </div>
     </aside>
   );

@@ -1,6 +1,7 @@
 import React from 'react'
+import { t } from './translations'
 
-export default function SchemesPage() {
+export default function SchemesPage({ lang = 'en-IN' }) {
   const schemes = [
     {
       id: 'myscheme',
@@ -53,7 +54,7 @@ export default function SchemesPage() {
 
   return (
     <div className="card">
-      <h2 className="card-title">Government Schemes for Women</h2>
+      <h2 className="card-title">{t('Schemes', lang)}</h2>
       <div style={{ display:'grid', gap:12 }}>
         {schemes.map(s => (
           <div
@@ -75,7 +76,7 @@ export default function SchemesPage() {
             </div>
             <div style={{ display:'flex', gap:12 }}>
               <button className="secondary-btn" onClick={() => open(s.link)}>Details</button>
-              <button className="primary-btn" onClick={() => open(s.link)}>Enroll</button>
+              <button className="primary-btn" onClick={() => open(s.link)}>{t('ApplyNow', lang)}</button>
             </div>
           </div>
         ))}

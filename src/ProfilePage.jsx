@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { t } from "./translations";
 
 const STORAGE_KEY = "finsakhi_profile_v1";
 
@@ -12,7 +13,7 @@ const SAMPLE = {
   avatarUrl: "",
 };
 
-export default function ProfilePage() {
+export default function ProfilePage({ lang = 'en-IN' }) {
   const [profile, setProfile] = useState(SAMPLE);
   const [draft, setDraft] = useState(SAMPLE);
   const [editing, setEditing] = useState(false);
@@ -188,7 +189,7 @@ export default function ProfilePage() {
       `}</style>
 
       <div className="profile-wrapper">
-        <h2 className="card-title">👤 Profile</h2>
+        <h2 className="card-title">👤 {t('Profile', lang)}</h2>
 
         <div className="profile-grid">
           {/* LEFT SIDE */}
@@ -207,25 +208,25 @@ export default function ProfilePage() {
               )}
             </div>
 
-            <div className="profile-name">{profile.name}</div>
-            <div className="profile-sub">{profile.village}</div>
+            <div className="profile-name">{t(profile.name, lang)}</div>
+            <div className="profile-sub">{t(profile.village, lang)}</div>
 
             {/* Buttons */}
             {!editing ? (
-              <button className="primary-btn" onClick={startEdit}>✏️ Edit Profile</button>
+              <button className="primary-btn" onClick={startEdit}>✏️ {t('EditProfile', lang)}</button>
             ) : (
               <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
                 <button className="primary-btn" onClick={saveProfile}>
-                  {loading ? "Saving…" : "💾 Save"}
+                  {loading ? t('SavingText', lang) : `💾 ${t('Save', lang)}`}
                 </button>
-                <button className="secondary-btn" onClick={cancelEdit}>Cancel</button>
+                <button className="secondary-btn" onClick={cancelEdit}>{t('CancelBtn', lang)}</button>
               </div>
             )}
 
             {editing && (
               <>
                 <label style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
-                  Upload Avatar (optional)
+                  {t('UploadAvatar', lang)}
                 </label>
                 <input ref={fileRef} type="file" accept="image/*" onChange={onAvatarPick} />
               </>
@@ -237,9 +238,9 @@ export default function ProfilePage() {
             <form style={{ display: "grid", gap: 14 }}>
               {/* Name */}
               <label className="field">
-                <span className="field-title">Name</span>
+                <span className="field-title">{t('NameLabel', lang)}</span>
                 {!editing ? (
-                  <div className="field-read">{profile.name}</div>
+                  <div className="field-read">{t(profile.name, lang)}</div>
                 ) : (
                   <input value={draft.name} onChange={(e) => updateField("name", e.target.value)} />
                 )}
@@ -247,9 +248,9 @@ export default function ProfilePage() {
 
               {/* Village */}
               <label className="field">
-                <span className="field-title">Village</span>
+                <span className="field-title">{t('VillageLabel', lang)}</span>
                 {!editing ? (
-                  <div className="field-read">{profile.village}</div>
+                  <div className="field-read">{t(profile.village, lang)}</div>
                 ) : (
                   <input value={draft.village} onChange={(e) => updateField("village", e.target.value)} />
                 )}
@@ -257,26 +258,26 @@ export default function ProfilePage() {
 
               {/* Language */}
               <label className="field">
-                <span className="field-title">Language</span>
+                <span className="field-title">{t('LanguageLabel', lang)}</span>
                 {!editing ? (
-                  <div className="field-read">{profile.language}</div>
+                  <div className="field-read">{t(profile.language, lang)}</div>
                 ) : (
                   <select value={draft.language} onChange={(e) => updateField("language", e.target.value)}>
-                    <option>English</option>
-                    <option>Hindi</option>
-                    <option>Kannada</option>
-                    <option>Tamil</option>
-                    <option>Marathi</option>
-                    <option>Bengali</option>
+                     <option value="English">{t('English', lang) || "English"}</option>
+                    <option value="Hindi">{t('Hindi', lang) || "Hindi"}</option>
+                    <option value="Kannada">{t('Kannada', lang) || "Kannada"}</option>
+                    <option value="Tamil">{t('Tamil', lang) || "Tamil"}</option>
+                    <option value="Marathi">{t('Marathi', lang) || "Marathi"}</option>
+                    <option value="Bengali">{t('Bengali', lang) || "Bengali"}</option>
                   </select>
                 )}
               </label>
 
               {/* Group */}
               <label className="field">
-                <span className="field-title">Group</span>
+                <span className="field-title">{t('GroupLabel', lang)}</span>
                 {!editing ? (
-                  <div className="field-read">{profile.group}</div>
+                  <div className="field-read">{t(profile.group, lang)}</div>
                 ) : (
                   <input value={draft.group} onChange={(e) => updateField("group", e.target.value)} />
                 )}

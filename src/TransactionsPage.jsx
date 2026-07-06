@@ -6,8 +6,9 @@ import {
   addTransaction as apiAddTransaction,
   deleteTransaction as apiDeleteTransaction,
 } from "./api/transactionsApi";
+import { t } from "./translations";
 
-export default function TransactionsPage() {
+export default function TransactionsPage({ lang = 'en-IN' }) {
   const [transactions, setTransactions] = useState([
     { id: "local-1", type: "income", label: "Self Help Group Loan", amount: 5000, date: "2025-11-01" },
     { id: "local-2", type: "expense", label: "Groceries", amount: 1200, date: "2025-11-05" },
@@ -227,7 +228,7 @@ export default function TransactionsPage() {
     <div className="tx-page">
       <style>{embeddedStyle}</style>
 
-      <h2>Transactions</h2>
+      <h2>{t('Transactions', lang)}</h2>
 
       <div className="tx-hero">
         <div style={{ flex: 1 }}>
@@ -236,7 +237,7 @@ export default function TransactionsPage() {
               <span className="emoji">💰</span>
               <div>
                 <div className="amount">₹{totalIncome.toLocaleString()}</div>
-                <div style={{ fontWeight: 600, marginTop: 2, color: "rgba(234,246,255,0.85)" }}>Income</div>
+                <div style={{ fontWeight: 600, marginTop: 2, color: "rgba(234,246,255,0.85)" }}>{t('Income', lang)}</div>
               </div>
             </div>
 
@@ -244,7 +245,7 @@ export default function TransactionsPage() {
               <span className="emoji">🛒</span>
               <div>
                 <div className="amount">₹{totalExpense.toLocaleString()}</div>
-                <div style={{ fontWeight: 600, marginTop: 2, color: "rgba(234,246,255,0.85)" }}>Expenses</div>
+                <div style={{ fontWeight: 600, marginTop: 2, color: "rgba(234,246,255,0.85)" }}>{t('Expenses', lang)}</div>
               </div>
             </div>
 
@@ -252,7 +253,7 @@ export default function TransactionsPage() {
               <span className="emoji">🌱</span>
               <div>
                 <div className="amount">₹{totalSaving.toLocaleString()}</div>
-                <div style={{ fontWeight: 600, marginTop: 2, color: "rgba(234,246,255,0.85)" }}>Savings</div>
+                <div style={{ fontWeight: 600, marginTop: 2, color: "rgba(234,246,255,0.85)" }}>{t('TotalSavings', lang)}</div>
               </div>
             </div>
           </div>
@@ -263,9 +264,9 @@ export default function TransactionsPage() {
             <canvas ref={chartRef}></canvas>
           </div>
           <div className="tx-legend" aria-hidden>
-            <div className="legend-item"><span className="swatch" style={{ background: "#4caf50" }} />Income</div>
-            <div className="legend-item"><span className="swatch" style={{ background: "#ff944d" }} />Expenses</div>
-            <div className="legend-item"><span className="swatch" style={{ background: "#2196f3" }} />Savings</div>
+            <div className="legend-item"><span className="swatch" style={{ background: "#4caf50" }} />{t('Income', lang)}</div>
+            <div className="legend-item"><span className="swatch" style={{ background: "#ff944d" }} />{t('Expenses', lang)}</div>
+            <div className="legend-item"><span className="swatch" style={{ background: "#2196f3" }} />{t('TotalSavings', lang)}</div>
           </div>
         </div>
       </div>
@@ -274,45 +275,45 @@ export default function TransactionsPage() {
       {error && <div style={{ margin: "12px 0", color: "tomato", fontWeight: 700 }}>{error}</div>}
 
       <div className="tx-list" aria-live="polite">
-        {transactions.map((t) => (
-          <div className="tx-card" key={t.id}>
+        {transactions.map((txn) => (
+          <div className="tx-card" key={txn.id}>
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-              <div className="icon">{t.type === "income" ? "💰" : t.type === "expense" ? "🛒" : "🌱"}</div>
+              <div className="icon">{txn.type === "income" ? "💰" : txn.type === "expense" ? "🛒" : "🌱"}</div>
               <div className="meta">
-                <div className="title">{t.label}</div>
-                <div className="date">Date: {t.date}</div>
+                <div className="title">{t(txn.label, lang) /* Optional localized category */}</div>
+                <div className="date">{t('Date', lang)}: {txn.date}</div>
               </div>
             </div>
 
             <div className="right">
-              <div className={`tx-amount ${t.type === "income" ? "income" : t.type === "expense" ? "expense" : "saving"}`}>
-                ₹{Number(t.amount).toLocaleString()}
+              <div className={`tx-amount ${txn.type === "income" ? "income" : txn.type === "expense" ? "expense" : "saving"}`}>
+                ₹{Number(txn.amount).toLocaleString()}
               </div>
-              <button className="del" onClick={() => handleDelete(t.id)} title="Delete">🗑️</button>
+              <button className="del" onClick={() => handleDelete(txn.id)} title="Delete">🗑️</button>
             </div>
           </div>
         ))}
       </div>
 
       <div className="tx-form">
-        <h3 style={{ marginTop: 0 }}>➕ Add Transaction</h3>
+        <h3 style={{ marginTop: 0 }}>➕ {t('AddTransaction', lang)}</h3>
         <form onSubmit={handleAddTransaction} style={{ display: "grid", gap: 10 }}>
           <select value={newTx.type} onChange={(e) => setNewTx({ ...newTx, type: e.target.value })}>
-            <option value="income">Income</option>
-            <option value="expense">Expense</option>
-            <option value="saving">Saving</option>
+            <option value="income">{t('Income', lang)}</option>
+            <option value="expense">{t('Expenses', lang)}</option>
+            <option value="saving">{t('TotalSavings', lang)}</option>
           </select>
 
-          <input type="text" placeholder="What was this for?" value={newTx.label} onChange={(e) => setNewTx({ ...newTx, label: e.target.value })} />
-          <input type="number" placeholder="Amount (₹)" value={newTx.amount} onChange={(e) => setNewTx({ ...newTx, amount: e.target.value })} />
+          <input type="text" placeholder={t('WhatFor', lang)} value={newTx.label} onChange={(e) => setNewTx({ ...newTx, label: e.target.value })} />
+          <input type="number" placeholder={t('AmountLabel', lang)} value={newTx.amount} onChange={(e) => setNewTx({ ...newTx, amount: e.target.value })} />
           <input type="date" value={newTx.date} onChange={(e) => setNewTx({ ...newTx, date: e.target.value })} />
 
           <div style={{ display: "flex", gap: 8 }}>
             <button type="submit" disabled={loading} className="primary-btn" style={{ flex: 1 }}>
-              Add
+              {t('Add', lang)}
             </button>
             <button type="button" onClick={() => setNewTx({ type: "expense", label: "", amount: "", date: "" })} className="secondary-btn">
-              Reset
+              {t('Reset', lang)}
             </button>
           </div>
         </form>
